@@ -5,316 +5,349 @@ let CommandList = class {
     constructor(userData) {
         this.userData = userData;
     }
-    Test() {
-        return "down";
-    }
 
-    Cmd(context) {
+    Cmd(context, Bot) {
         let user_id = context.message.from_id;
         let text = context.message.text.split(" ");
-        if (text[0] != "Команда") {
+        let bot = Bot;
+        if (text[0].toUpperCase() !== "Команда".toUpperCase()) {
             return null;
         }
         let answer = null;
-        if (text[1] == "рандом") {
-            if (text.length > 3) {
-                answer = GetRandomNumbers(text[3], text[2]);
-            } else if (text.length == 3) {
-                answer = GetRandomNumbers(text[2]);
-            }
-        }
-        if (text[1] == "регистрация") {
-            answer = UsersList(user_id, this.userData);
-        }
-        let index = GetDataUser(user_id, this.userData);
-        if (index == null) {
-            return "Вы еще не зарегистрировались";
-        }
-        if (text[1] == "инфо" || text[1] == "инфа") {
-            index = GetDataUser(user_id, this.userData);
-            answer = "Параметры персонажа:";
-            for (let i = 2; i < text.length; i++) {
-                if (text[i] == "ФИО") {
-                    answer = addStroke(answer, GetName(index, this.userData), 1);
-                }
-                if (text[i] == "Возраст") {
-                    answer = addStroke(answer, GetAge(index, this.userData), 1);
-                }
-                if (text[i] == "Пол") {
-                    answer = addStroke(answer, GetSex(index, this.userData), 1);
-                }
-                if (text[i] == "Характеристики") {
-                    answer = addStroke(answer, GetSpecial(index, this.userData), 1);
-                }
-                if (text[i] == "Описание") {
-                    answer = addStroke(answer, GetDescription(index, this.userData), 1);
-                }
-                if (text[i] == "Характер") {
-                    answer = addStroke(answer, GetPersonality(index, this.userData), 1);
-                }
-                if (text[i] == "Биография") {
-                    answer = addStroke(answer, GetBiografy(index, this.userData), 1);
-                }
-                if (text[i] == "Броня") {
-                    answer = addStroke(answer, GetArmor(index, this.userData), 1);
-                }
-                if (text[i] == "Оружие") {
-                    answer = addStroke(answer, GetWeapons(index, this.userData), 1);
-                }
-                if (text[i] == "Инвентарь") {
-                    answer = addStroke(answer, GetInventory(index, this.userData), 1);
-                }
-                if (text[i] == "Деньги") {
-                    answer = addStroke(answer, GetMoney(index, this.userData), 1);
-                }
-                if (text[i] == "Питомец") {
-                    addStroke(answer, GetPet(index, this.userData), 1);
-                }
-                if (text[i] == "Навыки") {
-                    answer = addStroke(answer, GetSkills(index, this.userData), 1);
-                }
-                if (text[i] == "Способности") {
-                    answer = addStroke(answer, GetAbilities(index, this.userData), 1);
+        if(text.length > 1) {
+            if (text[1].toUpperCase() === "рандом".toUpperCase()) {
+                if (text.length > 3) {
+                    answer = GetRandomNumbers(text[3], text[2]);
+                } else if (text.length === 3) {
+                    answer = GetRandomNumbers(text[2]);
                 }
             }
-        }
-
-        if (text[1] == "запись") {
-            if (text[2] == "ФИО") {
-                this.userData[index].name = "";
-                for (let i = 3; i < text.length; i++) {
-                    this.userData[index].name = addStroke(
-                        this.userData[index].name,
-                        text[i]
-                    );
+            if (text[1].toUpperCase() === "регистрация".toUpperCase()) {
+                answer = UsersList(user_id, this.userData);
+            }
+            let index = GetDataUser(user_id, this.userData);
+            if (index == null) {
+                return "Вы еще не зарегистрировались";
+            }
+            if (text[1].toUpperCase() === "инфо".toUpperCase() || text[1] === "инфа".toUpperCase()) {
+                index = GetDataUser(user_id, this.userData);
+                answer = "Параметры персонажа:";
+                for (let i = 2; i < text.length; i++) {
+                    if (text[i] === "ФИО") {
+                        answer = addStroke(answer, GetName(index, this.userData), 1);
+                    }
+                    if (text[i] === "Возраст") {
+                        answer = addStroke(answer, GetAge(index, this.userData), 1);
+                    }
+                    if (text[i] === "Пол") {
+                        answer = addStroke(answer, GetSex(index, this.userData), 1);
+                    }
+                    if (text[i] === "Характеристики") {
+                        answer = addStroke(answer, GetSpecial(index, this.userData), 1);
+                    }
+                    if (text[i] === "Описание") {
+                        answer = addStroke(answer, GetDescription(index, this.userData), 1);
+                    }
+                    if (text[i] === "Характер") {
+                        answer = addStroke(answer, GetPersonality(index, this.userData), 1);
+                    }
+                    if (text[i] === "Биография") {
+                        answer = addStroke(answer, GetBiografy(index, this.userData), 1);
+                    }
+                    if (text[i] === "Броня") {
+                        answer = addStroke(answer, GetArmor(index, this.userData), 1);
+                    }
+                    if (text[i] === "Оружие") {
+                        answer = addStroke(answer, GetWeapons(index, this.userData), 1);
+                    }
+                    if (text[i] === "Инвентарь") {
+                        answer = addStroke(answer, GetInventory(index, this.userData), 1);
+                    }
+                    if (text[i] === "Деньги") {
+                        answer = addStroke(answer, GetMoney(index, this.userData), 1);
+                    }
+                    if (text[i] === "Питомец") {
+                        addStroke(answer, GetPet(index, this.userData), 1);
+                    }
+                    if (text[i] === "Навыки") {
+                        answer = addStroke(answer, GetSkills(index, this.userData), 1);
+                    }
+                    if (text[i] === "Способности") {
+                        answer = addStroke(answer, GetAbilities(index, this.userData), 1);
+                    }
+                    if (text[i] === "Ранг") {
+                        answer = addStroke(answer, GetRang(index, this.userData), 1);
+                    }
                 }
-                if (text[3] == "удалить") {
+            }
+            if (text[1].toUpperCase() === "запись".toUpperCase()) {
+                if (text[2].toUpperCase() === ("ФИО").toUpperCase()) {
                     this.userData[index].name = "";
-                }
-                answer = "Имя установлено";
-            }
-            if (text[2] == "Возраст") {
-                this.userData[index].age = text[3];
-                if (text[3] == "удалить") {
-                    this.userData[index].age = "";
-                }
-                answer = "Возраст установлен";
-            }
-            if (text[2] == "Пол") {
-                this.userData[index].sex = text[3];
-                if (text[3] == "удалить") {
-                    this.userData[index].sex = "";
-                }
-                answer = "Пол установлен";
-            }
-            if (text[2] == "Характеристики") {
-                answer = '';
-                for (let i = 3; i < 13; i = i + 2) {
-                    if (text[i] == "Сила") {
-                        this.userData[index].special.strong = text[i + 1];
-                        answer = addStroke(answer, "Сила установлена", 1);
+                    for (let i = 3; i < text.length; i++) {
+                        this.userData[index].name = addStroke(
+                            this.userData[index].name,
+                            text[i]
+                        );
                     }
-                    if (text[i] == "Ловкость") {
-                        this.userData[index].special.agility = text[i + 1];
-                        answer = addStroke(answer, "Ловкость установлена", 1);
+                    if (text[3] === "удалить") {
+                        this.userData[index].name = "";
                     }
-                    if (text[i] == "Мудрость") {
-                        this.userData[index].special.wisdom = text[i + 1];
-                        answer = addStroke(answer, "Мудрость установлена", 1);
+                    answer = "Имя установлено";
+                }
+                if (text[2].toUpperCase() === ("Возраст").toUpperCase()) {
+                    this.userData[index].age = text[3];
+                    if (text[3] === "удалить") {
+                        this.userData[index].age = "";
                     }
-                    if (text[i] == "Харизма") {
-                        this.userData[index].special.charisma = text[i + 1];
-                        answer = addStroke(answer, "Харизма установлена", 1);
+                    answer = "Возраст установлен";
+                }
+                if (text[2].toUpperCase() === ("Пол").toUpperCase()) {
+                    this.userData[index].sex = text[3];
+                    if (text[3] === "удалить") {
+                        this.userData[index].sex = "";
                     }
-                    if (text[i] == "Удача") {
-                        this.userData[index].special.lack = text[i + 1];
-                        answer = addStroke(answer, "Удача установлена", 1);
+                    answer = "Пол установлен";
+                }
+                if (text[2].toUpperCase() === ("Характеристики").toUpperCase()) {
+                    answer = '';
+                    for (let i = 3; i < text.length; i = i + 2) {
+                        if (text[i].toUpperCase() === "Сила".toUpperCase()) {
+                            this.userData[index].special.strong = text[i + 1];
+                            this.userData[index].skills.atlithic_s = text[i + 1];
+                            answer = addStroke(answer, "Сила установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Ловкость".toUpperCase()) {
+                            this.userData[index].special.agility = text[i + 1];
+                            this.userData[index].skills.reaction_a = text[i + 1];
+                            this.userData[index].skills.stealth_a = text[i + 1];
+                            this.userData[index].skills.acrobatic_a = text[i + 1];
+                            this.userData[index].skills.hends_agility_a = text[i + 1];
+                            answer = addStroke(answer, "Ловкость установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Мудрость".toUpperCase()) {
+                            this.userData[index].special.wisdom = text[i + 1];
+                            this.userData[index].skills.livestock_w = text[i + 1];
+                            this.userData[index].skills.insight_w = text[i + 1];
+                            this.userData[index].skills.medic_w = text[i + 1];
+                            this.userData[index].skills.mindfulness_w = text[i + 1];
+                            this.userData[index].skills.survival_w = text[i + 1];
+                            answer = addStroke(answer, "Мудрость установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Харизма".toUpperCase()) {
+                            this.userData[index].special.charisma = text[i + 1];
+                            this.userData[index].skills.cheating_c = text[i + 1];
+                            this.userData[index].skills.conviction_c = text[i + 1];
+                            this.userData[index].skills.perfomance_c = text[i + 1];
+                            answer = addStroke(answer, "Харизма установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Удача".toUpperCase()) {
+                            this.userData[index].special.lack = text[i + 1];
+                            this.userData[index].skills.random_l = text[i + 1];
+                            answer = addStroke(answer, "Удача установлена", 1);
+                        }
                     }
                 }
-            }
-            if (text[2] == "Описание") {
-                for (let i = 3; i < text.length; i++) {
-                    this.userData[index].description = addStroke(
-                        this.userData[index].description,
-                        text[i]
-                    );
+                if (text[2].toUpperCase() === ("Описание").toUpperCase()) {
+                    for (let i = 3; i < text.length; i++) {
+                        this.userData[index].description = addStroke(
+                            this.userData[index].description,
+                            text[i]
+                        );
+                    }
+                    if (text[3] === "удалить") {
+                        this.userData[index].description = "";
+                    }
+                    answer = "Описание установлено";
                 }
-                if (text[3] == "удалить") {
-                    this.userData[index].description = "";
+                if (text[2].toUpperCase() === ("Характер").toUpperCase()) {
+                    for (let i = 3; i < text.length; i++) {
+                        this.userData[index].personality = addStroke(
+                            this.userData[index].personality,
+                            text[i]
+                        );
+                    }
+                    if (text[3] === "удалить") {
+                        this.userData[index].personality = "";
+                    }
+
+                    answer = "Характер установлен";
                 }
-                answer = "Описание установлено";
-            }
-            if (text[2] == "Характер") {
-                for (let i = 3; i < text.length; i++) {
-                    this.userData[index].personality = addStroke(
-                        this.userData[index].personality,
-                        text[i]
-                    );
+                if (text[2].toUpperCase() === ("Биография".toUpperCase())) {
+                    for (let i = 3; i < text.length; i++) {
+                        this.userData[index].biografy = addStroke(
+                            this.userData[index].biografy,
+                            text[i]
+                        );
+                    }
+                    if (text[3] === "удалить") {
+                        this.userData[index].biografy = "";
+                    }
+
+                    answer = "Биография установлена";
                 }
-                if (text[3] == "удалить") {
-                    this.userData[index].personality = "";
+                if (text[2].toUpperCase() === ("Броня").toUpperCase()) {
+                    for (let i = 3; i < text.length; i++) {
+                        this.userData[index].armor = addStroke(
+                            this.userData[index].armor,
+                            text[i],
+                            1
+                        );
+                    }
+                    if (text[3] === "удалить") {
+                        this.userData[index].armor = "";
+                    }
+
+                    answer = "Броня установлена";
+                }
+                if (text[2].toUpperCase() === ("Оружие").toUpperCase()) {
+                    for (let i = 3; i < text.length; i++) {
+                        this.userData[index].weapons = addStroke(
+                            this.userData[index].weapons,
+                            text[i],
+                            1
+                        );
+                    }
+                    if (text[3] === "удалить") {
+                        this.userData[index].weapons = "";
+                    }
+
+                    answer = "Оружие установлена";
+                }
+                if (text[2].toUpperCase() === ("Инвентарь").toUpperCase()) {
+                    for (let i = 3; i < text.length; i++) {
+                        this.userData[index].inventory = addStroke(
+                            this.userData[index].inventory,
+                            text[i],
+                            1
+                        );
+                    }
+                    if (text[3] === "удалить") {
+                        this.userData[index].inventory = "";
+                    }
+
+                    answer = "Инвентарь установлен";
+                }
+                if (text[2].toUpperCase() === ("Деньги").toUpperCase()) {
+                    this.userData[index].money =
+                        parseFloat(this.userData[index].money) + parseFloat(text[3]);
+                    answer = "Деньги установлены";
+                    if (text[3] === "удалить") {
+                        this.userData[index].money = 0;
+                        answer = "Деньги удалены";
+                    }
+                }
+                if (text[2].toUpperCase() === "Питомец".toUpperCase()) {
+                    for (let i = 3; i < text.length; i++) {
+                        this.userData[index].pet = addStroke(
+                            this.userData[index].pet,
+                            text[i]
+                        );
+                    }
+                    if (text[3] === "удалить") {
+                        this.userData[index].pet = "";
+                    }
+                    answer = "Питомец установлен";
+                }
+                if (text[2].toUpperCase() === "Навыки".toUpperCase()) {
+                    for (let i = 3; i < text.length; i = i + 2) {
+                        if (text[i].toUpperCase() === "Атлетика".toUpperCase()) {
+                            this.userData[index].skills.atlithic_s = text[i + 1];
+                            answer = addStroke(answer, "Атлетика установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Акробатика".toUpperCase()) {
+                            this.userData[index].skills.acrobatic_a = text[i + 1];
+                            answer = addStroke(answer, "Акробатика установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Ловкость_рук".toUpperCase()) {
+                            this.userData[index].skills.hends_agility_a = text[i + 1];
+                            answer = addStroke(answer, "Ловкость рук установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Скрытность".toUpperCase()) {
+                            this.userData[index].skills.stealth_a = text[i + 1];
+                            answer = addStroke(answer, "Скрытность  установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Реакция".toUpperCase()) {
+                            this.userData[index].skills.reaction_a = text[i + 1];
+                            answer = addStroke(answer, "Реакция  установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Обращение_с_животными".toUpperCase()) {
+                            this.userData[index].skills.livestock_w = text[i + 1];
+                            answer = addStroke(answer, "Обращение с животными установлено", 1);
+                        }
+                        if (text[i].toUpperCase() === "Проницательность".toUpperCase()) {
+                            this.userData[index].skills.insight_w = text[i + 1];
+                            answer = addStroke(answer, "Проницательность установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Медицина".toUpperCase()) {
+                            this.userData[index].skills.medic_w = text[i + 1];
+                            answer = addStroke(answer, "Медицина установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Внимательность".toUpperCase()) {
+                            this.userData[index].skills.mindfulness_w = text[i + 1];
+                            answer = addStroke(answer, "Внимательность установлена", 1);
+                        }
+                        if (text[i].toUpperCase() === "Выживание".toUpperCase()) {
+                            this.userData[index].skills.survival_w = text[i + 1];
+                            answer = addStroke(answer, "Выживание установлено", 1);
+                        }
+                        if (text[i].toUpperCase() === "Обман".toUpperCase()) {
+                            this.userData[index].skills.cheating_c = text[i + 1];
+                            answer = addStroke(answer, "Обман установлен", 1);
+                        }
+                        if (text[i].toUpperCase() === "Запугивание".toUpperCase()) {
+                            this.userData[index].skills.intimidation = text[i + 1];
+                            answer = addStroke(answer, "Запугивание установлено", 1);
+                        }
+                        if (text[i].toUpperCase() === "Выступление".toUpperCase()) {
+                            this.userData[index].skills.perfomance_c = text[i + 1];
+                            answer = addStroke(answer, "Выступление установлено", 1);
+                        }
+                        if (text[i].toUpperCase() === "Убеждение".toUpperCase()) {
+                            this.userData[index].skills.conviction_c = text[i + 1];
+                            answer = addStroke(answer, "Убеждение установлено", 1);
+                        }
+                        if (text[i].toUpperCase() === "Рандом".toUpperCase()) {
+                            this.userData[index].skills.random_l = text[i + 1];
+                            answer = addStroke(answer, "Рандом установлен", 1);
+                        }
+                    }
+                }
+                if (text[2].toUpperCase() === "Способности".toUpperCase()) {
+                    for (let i = 3; i < text.length; i++) {
+                        this.userData[index].abilities = addStroke(
+                            this.userData[index].abilities,
+                            text[i]
+                        );
+                    }
+                    if (text[3].toUpperCase() === "удалить".toUpperCase()) {
+                        this.userData[index].abilities = "";
+                    }
+                    answer = "Способности установлен";
+                }
+                if (text[2].toUpperCase() === "Ранг".toUpperCase()) {
+                    if (this.userData[index].rang === 5) {
+                        (async () => {
+                            console.log(GetIds(text, 4));
+                            let users = await bot.execute('users.get', {user_ids: GetIds(text, 4)});
+                            console.log(users);
+                            for (let i = 0; i < users.length; i++) {
+                                for (let j = 0; j < this.userData.length; j++) {
+                                    if (users[i].id === this.userData[j].user_id) {
+                                        this.userData[j].rang = parseFloat(text[3]);
+                                    }
+                                }
+                            }
+                        })();
+                        answer = "Ранг установлен";
+                    } else {
+                        answer = "У вас недостаточный уровень доступа"
+                    }
                 }
 
-                answer = "Характер установлен";
+                fs.writeFileSync("UsersList.json", JSON.stringify(this.userData));
             }
-            if (text[2] == "Биография") {
-                for (let i = 3; i < text.length; i++) {
-                    this.userData[index].biografy = addStroke(
-                        this.userData[index].biografy,
-                        text[i]
-                    );
-                }
-                if (text[3] == "удалить") {
-                    this.userData[index].biografy = "";
-                }
-
-                answer = "Биография установлена";
-            }
-            if (text[2] == "Броня") {
-                for (let i = 3; i < text.length; i++) {
-                    this.userData[index].armor = addStroke(
-                        this.userData[index].armor,
-                        text[i],
-                        1
-                    );
-                }
-                if (text[3] == "удалить") {
-                    this.userData[index].armor = "";
-                }
-
-                answer = "Броня установлена";
-            }
-            if (text[2] == "Оружие") {
-                for (let i = 3; i < text.length; i++) {
-                    this.userData[index].weapons = addStroke(
-                        this.userData[index].weapons,
-                        text[i],
-                        1
-                    );
-                }
-                if (text[3] == "удалить") {
-                    this.userData[index].weapons = "";
-                }
-
-                answer = "Оружие установлена";
-            }
-            if (text[2] == "Инвентарь") {
-                for (let i = 3; i < text.length; i++) {
-                    this.userData[index].inventory = addStroke(
-                        this.userData[index].inventory,
-                        text[i],
-                        1
-                    );
-                }
-                if (text[3] == "удалить") {
-                    this.userData[index].inventory = "";
-                }
-
-                answer = "Инвентарь установлен";
-            }
-            if (text[2] == "Деньги") {
-                this.userData[index].money =
-                    parseFloat(this.userData[index].money) + parseFloat(text[3]);
-                answer = "Деньги установлены";
-                if (text[3] == "удалить") {
-                    this.userData[index].money = 0;
-                    answer = "Деньги удалены";
-                }
-            }
-            if (text[2] == "Питомец") {
-                for (let i = 3; i < text.length; i++) {
-                    this.userData[index].pet = addStroke(
-                        this.userData[index].pet,
-                        text[i]
-                    );
-                }
-                if (text[3] == "удалить") {
-                    this.userData[index].pet = "";
-                }
-                answer = "Питомец установлен";
-            }
-            if (text[2] == "Навыки") {
-                for (let i = 3; i < 33; i = i + 2) {
-                    if (text[i] == "Атлетика") {
-                        this.userData[index].skills.atlithic_s = text[i + 1];
-                        answer = addStroke(answer, "Атлетика установлена", 1);
-                    }
-                    if (text[i] == "Акробатика") {
-                        this.userData[index].skills.acrobatic_a = text[i + 1];
-                        answer = addStroke(answer, "Акробатика установлена", 1);
-                    }
-                    if (text[i] == "Ловкость_рук") {
-                        this.userData[index].skills.hends_agility_a = text[i + 1];
-                        answer = addStroke(answer, "Ловкость рук установлена", 1);
-                    }
-                    if (text[i] == "Скрытность") {
-                        this.userData[index].skills.stealth_a = text[i + 1];
-                        answer = addStroke(answer, "Скрытность  установлена", 1);
-                    }
-                    if (text[i] == "Реакция") {
-                        this.userData[index].skills.reaction_a = text[i + 1];
-                        answer = addStroke(answer, "Реакция  установлена", 1);
-                    }
-                    if (text[i] == "Обращение_с_животными") {
-                        this.userData[index].skills.livestock_w = text[i + 1];
-                        answer = addStroke(answer, "Обращение с животными установлено", 1);
-                    }
-                    if (text[i] == "Проницательность") {
-                        this.userData[index].skills.insight_w = text[i + 1];
-                        answer = addStroke(answer, "Проницательность установлена", 1);
-                    }
-                    if (text[i] == "Медицина") {
-                        this.userData[index].skills.medic_w = text[i + 1];
-                        answer = addStroke(answer, "Медицина установлена", 1);
-                    }
-                    if (text[i] == "Внимательность") {
-                        this.userData[index].skills.mindfulness_w = text[i + 1];
-                        answer = addStroke(answer, "Внимательность установлена", 1);
-                    }
-                    if (text[i] == "Выживание") {
-                        this.userData[index].skills.survival_w = text[i + 1];
-                        answer = addStroke(answer, "Выживание установлено", 1);
-                    }
-                    if (text[i] == "Обман") {
-                        this.userData[index].skills.cheating_c = text[i + 1];
-                        answer = addStroke(answer, "Обман установлен", 1);
-                    }
-                    if (text[i] == "Запугивание") {
-                        this.userData[index].skills.intimidation = text[i + 1];
-                        answer = addStroke(answer, "Запугивание установлено", 1);
-                    }
-                    if (text[i] == "Выступление") {
-                        this.userData[index].skills.perfomance_c = text[i + 1];
-                        answer = addStroke(answer, "Выступление установлено", 1);
-                    }
-                    if (text[i] == "Убеждение") {
-                        this.userData[index].skills.conviction_c = text[i + 1];
-                        answer = addStroke(answer, "Убеждение установлено", 1);
-                    }
-                    if (text[i] == "Рандом") {
-                        this.userData[index].skills.random_l = text[i + 1];
-                        answer = addStroke(answer, "Рандом установлен", 1);
-                    }
-                }
-            }
-            if (text[2] == "Способности") {
-                for (let i = 3; i < text.length; i++) {
-                    this.userData[index].abilities = addStroke(
-                        this.userData[index].abilities,
-                        text[i]
-                    );
-                }
-                if (text[3] == "удалить") {
-                    this.userData[index].abilities = "";
-                }
-                answer = "Способности установлен";
-            }
-
-            fs.writeFileSync("UsersList.json", JSON.stringify(this.userData));
-        }
-
-        if (text[1] == "список") {
-            answer = `Все команды начинаются со слова 'Команда', а затем указываете следующие параметры (В командах скобки не стоят): 
+            if (text[1].toUpperCase() === "список".toUpperCase()) {
+                answer = `Все команды начинаются со слова 'Команда', а затем указываете следующие параметры (В командах скобки не стоят): 
 * 1)рандом (число1)
 
 *2)рандом (число1) (число2)
@@ -335,6 +368,211 @@ let CommandList = class {
 
 *Примечание 4: команды "Броня, Оружие, Инвентарь" при записи добавляют текст на новую строку, не удаляя старую 
 `;
+            }
+            if (text[1].toUpperCase() === "стереть".toUpperCase()) {
+                if (text.length === 2) {
+                    this.userData.splice(index, 1);
+                } else if (this.userData[index].user_id === 5) {
+                    (async () => {
+                        console.log(GetIds(text, 2));
+                        let users = await bot.execute('users.get', {user_ids: GetIds(text, 2)});
+                        console.log(users);
+                        for (let i = 0; i < users.length; i++) {
+                            for (let j = 0; j < this.userData.length; j++) {
+                                if (users[i].id === this.userData[j].user_id) {
+                                    this.userData.splice(j, 1);
+                                }
+                            }
+                        }
+                    })();
+                }
+            }
+            if (text[1].toUpperCase() === "проверка".toUpperCase()) {
+                answer = "Проверки:";
+                let buff;
+                for (let i = 2; i < text.length; i++) {
+                    if (text[i].toUpperCase() === "Сила".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка силы", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].special.strong);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Ловкость".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка ловкости", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].special.agility);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Мудрость".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка мудрости", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].special.wisdom);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Харизма".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка харизмы", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].special.charisma);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Удача".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка удачи", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].special.lack);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Атлетика".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка атлетики", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.atlithic_s);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Акробатика".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка акробатики", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.acrobatic_a);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Ловкость_рук".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка ловкости рук", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.hends_agility_a);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Скрытность".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка скрытности", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.stealth_a);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Реакция".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка реакции", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.reaction_a);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Обращение_с_животными".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка обращения с животными", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.livestock_w);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Проницательность".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка проницательности", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.insight_w);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Медицина".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка медицины", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.medic_w);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Внимательность".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка внимательности", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.mindfulness_w);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Выживание".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка выживания", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.survival_w);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Обман".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка обмана", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.cheating_c);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Запугивание".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка запугивания", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.intimidation);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Выступление".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка выступления", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.perfomance_c);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Убеждение".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка убеждения", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.conviction_c);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                    if (text[i].toUpperCase() === "Рандом".toUpperCase()) {
+                        answer = addStroke(answer, "Проверка случая", 1);
+                        buff = GetRandomNumbers(6) - parseFloat(this.userData[index].skills.random_l);
+                        if (buff < 2) {
+                            answer = addStroke(answer, "успешна");
+                        } else {
+                            answer = addStroke(answer, "провалена");
+                        }
+                    }
+                }
+            }
         }
         if (answer != null) {
             return answer;
@@ -346,7 +584,7 @@ let CommandList = class {
 
 function GetDataUser(user_id, userData) {
     for (let i = 0; i < userData.length; i++) {
-        if (userData[i].user_id == user_id) {
+        if (userData[i].user_id === user_id) {
             return i;
         }
     }
@@ -360,6 +598,7 @@ function GetName(index, userData) {
         return "Имя отсутсвует";
     }
 }
+
 function GetAge(index, userData) {
     if (userData[index].age != null) {
         return addStroke("Возраст:", userData[index].age);
@@ -367,6 +606,7 @@ function GetAge(index, userData) {
         return "Возраст отсутсвует";
     }
 }
+
 function GetSex(index, userData) {
     if (userData[index].sex != null) {
         return addStroke("Пол:", userData[index].sex);
@@ -389,6 +629,7 @@ function GetSpecial(index, userData) {
     answer1 = addStroke(answer1, userData[index].special.lack);
     return answer1;
 }
+
 function GetDescription(index, userData) {
     if (userData[index].description != null) {
         return addStroke("Описание:", userData[index].description);
@@ -396,6 +637,7 @@ function GetDescription(index, userData) {
         return "Описание отсутсвует";
     }
 }
+
 function GetPersonality(index, userData) {
     if (userData[index].personality != null) {
         return addStroke("Характер:", userData[index].personality);
@@ -403,6 +645,7 @@ function GetPersonality(index, userData) {
         return "Характер отсутсвует";
     }
 }
+
 function GetBiografy(index, userData) {
     if (userData[index].biografy != null) {
         return addStroke("Биография:", userData[index].biografy);
@@ -410,6 +653,7 @@ function GetBiografy(index, userData) {
         return "Биография отсутсвует";
     }
 }
+
 function GetArmor(index, userData) {
     if (userData[index].armor != null) {
         return addStroke("Броня:", userData[index].armor);
@@ -417,6 +661,7 @@ function GetArmor(index, userData) {
         return "Броня отсутсвует";
     }
 }
+
 function GetWeapons(index, userData) {
     if (userData[index].weapons != null) {
         return addStroke("Оружие:", userData[index].weapons);
@@ -424,6 +669,7 @@ function GetWeapons(index, userData) {
         return "Оружие отсутсвует";
     }
 }
+
 function GetInventory(index, userData) {
     if (userData[index].inventory != null) {
         return addStroke("Инвентарь:", userData[index].inventory);
@@ -431,6 +677,7 @@ function GetInventory(index, userData) {
         return "Инвентарь отсутсвует";
     }
 }
+
 function GetMoney(index, userData) {
     if (userData[index].money != null) {
         return addStroke("Деньги:", userData[index].money);
@@ -438,6 +685,7 @@ function GetMoney(index, userData) {
         return "Деньги отсутсвует";
     }
 }
+
 function GetPet(index, userData) {
     if (userData[index].pet != null) {
         return addStroke("Питомец:", userData[index].pet);
@@ -445,6 +693,7 @@ function GetPet(index, userData) {
         return "Питомец отсутсвует";
     }
 }
+
 function GetSkills(index, userData) {
     let answer1 = "Навыки: ";
     answer1 = addStroke(answer1, "Атлетика:", 1);
@@ -479,6 +728,7 @@ function GetSkills(index, userData) {
     answer1 = addStroke(answer1, userData[index].skills.random_l);
     return answer1;
 }
+
 function GetAbilities(index, userData) {
     if (userData[index].abilities != null) {
         return addStroke("Способности:", userData[index].abilities);
@@ -487,24 +737,38 @@ function GetAbilities(index, userData) {
     }
 }
 
-function addStroke(stroke, addstroke, n = 0) {
-    if (n == 0) {
-        let answer2 = stroke + " " + addstroke;
-        return answer2;
+function GetRang(index, userData) {
+    if (userData[index].rang != null) {
+        return addStroke("Ранг:", userData[index].rang);
     } else {
-        let answer2 = stroke + "\n" + addstroke;
-        return answer2;
+        return "Ранг отсутсвует";
+    }
+}
+
+function GetIds(text, index) {
+    let answer = '';
+    for (let i = index; i < text.length; i++) {
+        answer = answer + text[i] + ',';
+    }
+    return answer.slice(0, -1);
+}
+
+function addStroke(stroke, addstroke, n = 0) {
+    if (n === 0) {
+        return stroke + " " + addstroke;
+    } else {
+        return stroke + "\n" + addstroke;
     }
 }
 
 function UsersList(user_id, userData) {
     let isHasID = false;
     for (let i = 0; i < userData.length; i++) {
-        if (userData[i].user_id == user_id) {
+        if (userData[i].user_id === user_id) {
             isHasID = true;
         }
     }
-    if (isHasID == false) {
+    if (isHasID === false) {
         let user = new User(user_id);
         userData.push(user);
         fs.writeFileSync("UsersList.json", JSON.stringify(userData));

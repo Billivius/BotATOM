@@ -37,6 +37,7 @@ let User = class {
       random_l: 0
     };
     this.abilities = null;
+    this.rang = 0;
   }
 };
 module.exports = User;

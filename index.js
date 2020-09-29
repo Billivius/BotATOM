@@ -1,6 +1,6 @@
 const VkBot = require("node-vk-bot-api");
 const bot = new VkBot(
-    "2da2aea977d6aea7594df1a7667b6b9d77b9fb1545bc3ba3f9a3cc50d83b09bd51228c129cc26b33cb7f1"
+    "efdf2124aaf9b6dafd88d5451b32f34b9daa74297d3364c3920cd573b58b7aee9fea5382855110a40c33f"
 );
 const fs = require('fs');
 //const User = require("./User.js");
@@ -10,7 +10,7 @@ let userData = JSON.parse(fs.readFileSync("UsersList.json"));
 let command = new Command(userData);
 
 bot.on(async context => {
-    let answer = command.Cmd(context);
+    let answer = command.Cmd(context, bot);
     if (answer != null) {
         try {
             await context.reply(answer);
