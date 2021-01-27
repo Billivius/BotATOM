@@ -1,6 +1,6 @@
 const VkBot = require("node-vk-bot-api");
 const bot = new VkBot(
-    "efdf2124aaf9b6dafd88d5451b32f34b9daa74297d3364c3920cd573b58b7aee9fea5382855110a40c33f"
+    "ключ доступа группы"
 );
 const fs = require('fs');
 //const User = require("./User.js");
